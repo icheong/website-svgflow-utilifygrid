@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- SEO -->
+  <title>SVGFlow — Fluid SVG Wave Background Generator</title>
+  <meta name="description" content="Generate stunning, animated SVG wave backgrounds in real-time. Customize speed, amplitude, colors and export production-ready inline SVG code for free." />
+  <meta name="keywords" content="SVG wave generator, animated background, SVG animation, web design tool, gradient waves" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="SVGFlow — Fluid SVG Wave Background Generator" />
+  <meta property="og:description" content="Real-time animated SVG wave generator. Export clean inline SVG code instantly." />
+  <meta property="og:type" content="website" />
+
+  <!-- Fonts via Google (loaded in CSS) -->
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="styles.css" />
+
+  <!-- Favicon (inline SVG data URI) -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%235b8dee'/><path d='M2 20 Q8 10 16 18 Q24 26 30 16' stroke='white' stroke-width='2.5' fill='none' stroke-linecap='round'/></svg>" />
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════
+     APP SHELL
+══════════════════════════════════════════════ -->
+<div id="app" role="main">
+
+  <!-- ── SIDEBAR ───────────────────────────────── -->
+  <aside id="sidebar" aria-label="Wave Controls">
+
+    <!-- Logo -->
+    <div class="sidebar-header">
+      <div class="logo-row">
+        <div class="logo-icon" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1 11 Q4.5 5 9 10 Q13.5 15 17 9" stroke="white" stroke-width="2" stroke-linecap="round" fill="none"/>
+            <path d="M1 14 Q4.5 8 9 13 Q13.5 18 17 12" stroke="rgba(255,255,255,0.5)" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+          </svg>
+        </div>
+        <span class="logo-name">SVGFlow</span>
+      </div>
+      <div class="logo-tag">Fluid Wave Background Generator</div>
+    </div>
+
+    <!-- Controls Body -->
+    <div class="sidebar-body">
+
+      <!-- ── Waves section ── -->
+      <div>
+        <div class="section-label">Wave Layers</div>
+        <div class="seg-control" role="group" aria-label="Number of wave layers">
+          <button class="seg-btn" data-val="1" id="seg-1" aria-pressed="false">1</button>
+          <button class="seg-btn active" data-val="2" id="seg-2" aria-pressed="true">2</button>
+          <button class="seg-btn" data-val="3" id="seg-3" aria-pressed="false">3</button>
+        </div>
+      </div>
+
+      <hr class="divider" />
+
+      <!-- ── Wave parameters ── -->
+      <div>
+        <div class="section-label">Wave Parameters</div>
+        <div class="control-group">
+
+          <!-- Speed -->
+          <div class="control-item">
+            <div class="control-label-row">
+              <label class="control-label" for="ctrl-speed">Animation Speed</label>
+              <span class="control-value" id="val-speed">0.012</span>
+            </div>
+            <input
+              type="range"
+              id="ctrl-speed"
+              min="0.001"
+              max="0.06"
+              step="0.001"
+              value="0.012"
+              aria-label="Animation speed"
+            />
+          </div>
+
+          <!-- Amplitude -->
+          <div class="control-item">
+            <div class="control-label-row">
+              <label class="control-label" for="ctrl-amplitude">Wave Height</label>
+              <span class="control-value" id="val-amplitude">55</span>
+            </div>
+            <input
+              type="range"
+              id="ctrl-amplitude"
+              min="5"
+              max="160"
+              step="1"
+              value="55"
+              aria-label="Wave amplitude / height"
+            />
+          </div>
+
+        </div>
+      </div>
+
+      <hr class="divider" />
+
+      <!-- ── Color Palettes ── -->
+      <div>
+        <div class="section-label">Color Gradient</div>
+        <div class="palette-grid" role="radiogroup" aria-label="Color palette selection">
+
+          <!-- Emerald Glass -->
+          <div
+            class="palette-card active"
+            data-palette="emerald"
+            role="radio"
+            aria-checked="true"
+            aria-label="Emerald Glass palette"
+            tabindex="0"
+            id="palette-emerald"
+          >
+            <svg class="palette-preview" viewBox="0 0 60 45" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="pg0" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stop-color="#04111a"/>
+                  <stop offset="100%" stop-color="#0a2a2e"/>
+                </linearGradient>
+              </defs>
+              <rect width="60" height="45" fill="url(#pg0)"/>
+              <path d="M0 28 Q15 18 30 25 Q45 32 60 22 L60 45 L0 45 Z" fill="#0fd4a8" fill-opacity="0.85"/>
+              <path d="M0 34 Q15 24 30 31 Q45 38 60 28 L60 45 L0 45 Z" fill="#10b58f" fill-opacity="0.6"/>
+            </svg>
+            <div class="palette-name">Emerald</div>
+          </div>
+
+          <!-- Electric Silk -->
+          <div
+            class="palette-card"
+            data-palette="electric"
+            role="radio"
+            aria-checked="false"
+            aria-label="Electric Silk palette"
+            tabindex="0"
+            id="palette-electric"
+          >
+            <svg class="palette-preview" viewBox="0 0 60 45" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="pg1" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stop-color="#0d0516"/>
+                  <stop offset="100%" stop-color="#1e0940"/>
+                </linearGradient>
+              </defs>
+              <rect width="60" height="45" fill="url(#pg1)"/>
+              <path d="M0 28 Q15 18 30 25 Q45 32 60 22 L60 45 L0 45 Z" fill="#a78bfa" fill-opacity="0.85"/>
+              <path d="M0 34 Q15 24 30 31 Q45 38 60 28 L60 45 L0 45 Z" fill="#7c3aed" fill-opacity="0.6"/>
+            </svg>
+            <div class="palette-name">Electric</div>
+          </div>
+
+          <!-- Deep Neon -->
+          <div
+            class="palette-card"
+            data-palette="neon"
+            role="radio"
+            aria-checked="false"
+            aria-label="Deep Neon palette"
+            tabindex="0"
+            id="palette-neon"
+          >
+            <svg class="palette-preview" viewBox="0 0 60 45" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="pg2" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stop-color="#130710"/>
+                  <stop offset="100%" stop-color="#340020"/>
+                </linearGradient>
+              </defs>
+              <rect width="60" height="45" fill="url(#pg2)"/>
+              <path d="M0 28 Q15 18 30 25 Q45 32 60 22 L60 45 L0 45 Z" fill="#f472b6" fill-opacity="0.85"/>
+              <path d="M0 34 Q15 24 30 31 Q45 38 60 28 L60 45 L0 45 Z" fill="#ec4899" fill-opacity="0.6"/>
+            </svg>
+            <div class="palette-name">Deep Neon</div>
+          </div>
+
+        </div>
+      </div>
+
+    </div><!-- /sidebar-body -->
+
+    <!-- ── Export Block ── -->
+    <div class="export-block">
+      <div class="section-label" style="margin-bottom:4px;">Export Asset</div>
+
+      <!-- Free: Copy Code -->
+      <button class="btn btn-free" id="btn-copy" aria-label="Copy SVG code to clipboard">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect x="9" y="9" width="13" height="13" rx="2" stroke="currentColor" stroke-width="2"/>
+          <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        Copy Code Block (Free)
+      </button>
+
+      <!-- Premium: Unlock -->
+      <button class="btn btn-premium" id="btn-premium" aria-label="Unlock premium HD bundle for $4.99">
+        <span aria-hidden="true">🔒</span>
+        Unlock Premium HD Bundle
+        <span style="font-size:11px; font-weight:700; opacity:0.85;">$4.99</span>
+      </button>
+
+      <p class="premium-caption">
+        Unlocks infinite raw looping SVG animation code,<br/>
+        4K high-res video loops &amp; desktop live wallpaper presets.
+      </p>
+    </div>
+
+  </aside><!-- /sidebar -->
+
+  <!-- ── CANVAS AREA ──────────────────────────── -->
+  <section id="canvas-area" aria-label="Live wave preview">
+
+    <!-- Animated SVG -->
+    <svg
+      id="wave-svg"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 1440 900"
+      preserveAspectRatio="xMidYMid slice"
+      aria-hidden="true"
+    >
+      <defs id="wave-defs"></defs>
+      <rect id="bg-rect" width="1440" height="900" fill="#04111a" />
+      <!-- Wave paths injected by app.js -->
+    </svg>
+
+    <!-- Live badge -->
+    <div class="canvas-badge" aria-live="polite">
+      <div class="live-dot" aria-hidden="true"></div>
+      Live Preview
+    </div>
+
+  </section>
+
+</div><!-- /app -->
+
+
+<!-- ══════════════════════════════════════════════
+     PREMIUM MODAL
+══════════════════════════════════════════════ -->
+<div id="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-hidden="true">
+  <div class="modal-box">
+
+    <button class="modal-close" id="modal-close" aria-label="Close modal">✕</button>
+
+    <div class="modal-badge">
+      <span>🔒</span> Premium
+    </div>
+
+    <h2 class="modal-title" id="modal-title">Unlock the Full<br/>SVGFlow Experience</h2>
+
+    <div class="modal-price">
+      <sup>$</sup>4.99 <span style="font-size:15px;color:#8b91b3;font-weight:400;align-self:flex-end;margin-bottom:4px;">one-time</span>
+    </div>
+
+    <ul class="modal-features" aria-label="Premium features">
+      <li>
+        <div class="feature-icon" aria-hidden="true">✦</div>
+        Infinite raw looping SVG animation code export
+      </li>
+      <li>
+        <div class="feature-icon" aria-hidden="true">🎞</div>
+        4K high-resolution video loop downloads
+      </li>
+      <li>
+        <div class="feature-icon" aria-hidden="true">🖥</div>
+        Desktop live wallpaper presets (macOS &amp; Windows)
+      </li>
+      <li>
+        <div class="feature-icon" aria-hidden="true">🎨</div>
+        15+ exclusive premium color palettes
+      </li>
+      <li>
+        <div class="feature-icon" aria-hidden="true">⚡</div>
+        Priority support &amp; lifetime updates
+      </li>
+    </ul>
+
+    <button class="modal-cta" id="modal-cta" aria-label="Purchase premium for $4.99">
+      🔓 Unlock for $4.99
+    </button>
+
+    <p class="modal-disclaimer">
+      Secure one-time purchase. No subscription. Instant access.
+    </p>
+
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════
+     TOAST NOTIFICATION
+══════════════════════════════════════════════ -->
+<div id="toast" role="status" aria-live="polite" aria-atomic="true">
+  <span id="toast-icon" class="toast-icon"></span>
+  <span id="toast-msg"></span>
+</div>
+
+
+<!-- Script -->
+<script src="app.js"></script>
+
+</body>
+</html>
